@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Ubah Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div style="padding: 30px;">
+    <div class="card">
+        <div class="card-header text-white text-center" style="background-color: #2C4B75;">
+            <h5>Ubah Pasien</h5>
+        </div>
+        <div class="card-body">
+            <div class="justify-content-center">
+                <form th:action="@{/pasien/ubah/} + ${pasien.idPasien}" th:object="${pasien}" method="POST">
+                    Nama Pasien<br>
+                    <input required th:field="*{namaPasien}" class="form-control" type="text" name="namaPasien"
+                           placeholder="Nama Pasien"/>
+                    <br>
+
+                    NIK<br>
+                    <input required th:field="*{nik}" class="form-control" type="text" name="nik"
+                           placeholder="NIK"/>
+                    <br>
+
+                    Nomor Telepon <br>
+                    <input required th:field="*{noTelepon}" class="form-control" type="text" name="noTelepon"
+                           placeholder="Nomor Telepon"/>
+                    <br>
+
+                    Jenis Kelamin : <br>
+                    <select class="form-control" th:field="${pasien.jenisKelamin}">
+                        <option th:value="0"> Perempuan </option>
+                        <option th:value="1"> Laki Laki </option>
+                    </select>
+                    <br>
+
+                    Tanggal Lahir <br>
+                    <input required th:field="*{tanggalLahir}" class="form-control" type="datetime-local" name="tanggalLahir" />
+                    <br>
+
+                    Tempat Lahir<br>
+                    <input required th:field="*{tempatLahir}" class="form-control" type="text" name="tempatLahir"
+                           placeholder="Tempat Lahir"/>
+                    <br>
+
+                    Pekerjaan<br>
+                    <input required th:field="*{pekerjaan}" class="form-control" type="text" name="pekerjaan"
+                           placeholder="Pekerjaan"/>
+                    <br>
+
+                    <div style="margin-top: 10px;">
+                        <button class="btn text-white float-right" style="background-color: #091C32;" type="submit">Ubah</button>
+                        <a class="btn btn-outline-dark float-right" style="margin-right: 10px" href="/pasien">Batal</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="fragments/fragment :: footer" style="margin-top: 15px;"></div>
+</body>
+</html>

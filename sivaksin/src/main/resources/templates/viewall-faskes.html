@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Faskes</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div style="padding: 30px;">
+    <a class="btn text-white" style="background-color: #2C4B75; margin-bottom: 15px" th:href="@{/faskes/tambah}">Tambah Faskes</a>
+    <div class="card">
+        <div class="card-header text-white text-center" style="background-color: #2C4B75;">
+            <h5>Daftar Faskes</h5>
+        </div>
+        <div class="card-body">
+            <div th:if="*{listFaskes.size() != 0}">
+                <table class="table text-center">
+                    <thead style="color: #2C4B75;">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>Kuota</th>
+                        <th>Provinsi</th>
+                        <th>Kabupaten</th>
+                        <th>Jam Mulai</th>
+                        <th>Jam Selesai</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="faskes, iterationStatus : ${listFaskes}" style="color: grey">
+                        <!--                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"-->
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${faskes.namaFaskes}"></td>
+                        <td th:text="${faskes.kuota}"></td>
+                        <td th:text="${faskes.provinsi}"></td>
+                        <td th:text="${faskes.kabupaten}"></td>
+                        <td th:text="${#temporals.format(faskes.jamMulai, 'hh:mm a')}"></td>
+                        <td th:text="${#temporals.format(faskes.jamTutup, 'hh:mm a')}"></td>
+<!--                        <td th:text="${faskes.jamMulai}"></td>-->
+<!--                        <td th:text="${faskes.jamTutup}"></td>-->
+                        <td>
+                            <a class="btn text-white" style="background-color: #2C4B75;" th:href="@{/faskes/} + ${faskes.idFaskes}">Lihat</a>
+                            <a class="btn text-white" style="background-color: #091C32;" th:href="@{/faskes/ubah/} + ${faskes.idFaskes}">Ubah</a>
+                            <form th:action="@{/faskes/hapus/} + ${faskes.idFaskes}" th:object="${faskes}" method="POST">
+                                <button class="btn text-white" style="background-color: #4E342E" type="submit">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="fragments/fragment :: footer" style="margin-top: 15px;"></div>
+</body>
+</html>

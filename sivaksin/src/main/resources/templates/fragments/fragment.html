@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <head th:fragment="css">
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <head th:fragment="js">
+        <script
+                src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-CXorXvZcTkaix6Yvo6HppcZGetbYMGWSFIBw8HfCJo="
+                crossorigin="anonymous"
+        >
+        </script>
+        <script src="https://getbootstrap.com/docs/4.1/assets/js/vendor/popper.min.js"></script>
+        <script th:src="@{/js/bootstrap.min.js}"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </head>
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-light" style="background-color: #2C4B75;">
+    <a class="navbar-brand font-weight-bold text-white" href="/">SIVAKSIN</a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggle-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/faskes">Faskes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/pasien">Pasien</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown"
+                   role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cari</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Cari Faskes Berdasarkan Vaksin</a>
+                    <a class="dropdown-item" href="#">Cari Pasien Berdasarkan Jenis Vaksin dan Faskes</a>
+                    <a class="dropdown-item" href="#">Cari Jumlah Pasien Setiap Faskes Bulan Ini</a>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+
+<div th:fragment="footer">
+    <p class="text-center" style="color: grey">Copyright &copy; SiVaksin - 2021</p>
+</div>
+
+</body>
+</html>

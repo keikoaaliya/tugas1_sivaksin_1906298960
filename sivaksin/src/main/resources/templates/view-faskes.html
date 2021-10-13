@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Faskes</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div style="padding: 30px;">
+    <div class="card">
+        <div class="card-header text-white text-center" style="background-color: #2C4B75;">
+            <h5>Detail Faskes</h5>
+        </div>
+        <div class="card-body">
+            <div th:if="${faskes != null}" class="row" style="color: #2C4B75;">
+                <div class="col-3">
+                    <p th:text="'Nama Fasilitas Kesehatan'"></p>
+                    <p th:text="'Kuota'"></p>
+                    <p th:text="'Provinsi'"></p>
+                    <p th:text="'Kabupaten'"></p>
+                    <p th:text="'Jam Mulai'"></p>
+                    <p th:text="'Jam Selesai'"></p>
+                    <p th:text="'Jenis Vaksin'"></p>
+                </div>
+                <div class="col-9">
+                    <p th:text="': ' + ${faskes.namaFaskes}"></p>
+                    <p th:text="': ' + ${faskes.kuota}"></p>
+                    <p th:text="': ' + ${faskes.provinsi}"></p>
+                    <p th:text="': ' + ${faskes.kabupaten}"></p>
+                    <p th:text="': ' + ${faskes.jamMulai}"></p>
+                    <p th:text="': ' + ${faskes.jamTutup}"></p>
+                    <p th:text="': ' + ${vaksin.jenisVaksin} + ' - ' + ${vaksin.asalNegara} + ' - ' + ${vaksin.efikasi}"></p>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center mb-2">
+                        <a class="btn text-white" style="background-color: #091C32;" th:href="@{/faskes/ubah/} + ${faskes.idFaskes}">Ubah</a>
+                    </div>
+                    <div class="row justify-content-center">
+                        <form th:action="@{/faskes/hapus/} + ${faskes.idFaskes}" th:object="${faskes}" method="POST">
+                            <button class="btn text-white" style="background-color: #4E342E" type="submit">Hapus</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a class="btn btn-outline-dark mt-4 mb-4" th:href="@{/faskes/} + ${faskes.idFaskes} + @{/tambah/pasien}">Tambah <br>Pasien</a>
+    <div class="card">
+        <div class="card-header text-white text-center" style="background-color: #2C4B75;">
+            <h5>Detail Pasien</h5>
+        </div>
+        <div class="card-body">
+            <div th:if="${listPasien.size() != 0}">
+                <table class="table text-center">
+                    <thead style="color: #2C4B75;">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama</th>
+                        <th>NIK</th>
+                        <th>Nomor Telepon</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Tempat Lahir</th>
+                        <th>Pekerjaan</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="pasien, iterationStatus : ${listPasien}" style="color: grey">
+                        <!--                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"-->
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${pasien.namaPasien}" style="color: #2C4B75"></td>
+                        <td th:text="${pasien.nik}"></td>
+                        <td th:text="${pasien.noTelepon}"></td>
+                        <td th:if="${pasien.jenisKelamin == 0}">Perempuan</td>
+                        <td th:if="${pasien.jenisKelamin == 1}">Laki-laki</td>
+                        <td th:text="${pasien.tempatLahir}"></td>
+                        <td th:text="${pasien.pekerjaan}"></td>
+                        <td>
+                            <a class="btn text-white" style="background-color: #2C4B75;" th:href="@{/}">Lihat</a>
+                            <a class="btn text-white" style="background-color: #091C32;" th:href="@{/">Ubah</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div th:unless="${listPasien.size() != 0}" class="text-center">
+                <h5 style="color: #2C4B75">Tidak ada pasien yang terdaftar</h5>
+            </div>
+        </div>
+    </div>
+    <div style="margin-bottom: 20px; margin-top: 20px">
+        <a class="btn btn-outline-dark float-right" href="/faskes">Kembali</a>
+    </div>
+</div>
+<div th:include="fragments/fragment :: footer" style="margin-top: 50px;"></div>
+</body>
+</html>

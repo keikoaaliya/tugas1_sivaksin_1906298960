@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div style="padding: 30px;">
+    <div class="card">
+        <div class="card-header text-white text-center" style="background-color: #2C4B75;">
+            <h5>Detail Pasien</h5>
+        </div>
+        <div class="card-body">
+            <div th:if="${pasien != null}" class="row" style="color: #2C4B75;">
+                <div class="col-3">
+                    <p th:text="'Nama Pasien'"></p>
+                    <p th:text="'NIK'"></p>
+                    <p th:text="'Nomor Telepon'"></p>
+                    <p th:text="'Jenis Kelamin'"></p>
+                    <p th:text="'Tanggal Lahir'"></p>
+                    <p th:text="'Tempat Lahir'"></p>
+                    <p th:text="'Pekerjaan'"></p>
+                </div>
+                <div class="col-9">
+                    <p th:text="': ' + ${pasien.namaPasien}"></p>
+                    <p th:text="': ' + ${pasien.nik}"></p>
+                    <p th:text="': ' + ${pasien.noTelepon}"></p>
+                    <p th:if="${pasien.jenisKelamin == 0}">: Perempuan</p>
+                    <p th:if="${pasien.jenisKelamin == 1}">: Laki-laki</p>
+                    <p th:text="': ' + ${#temporals.format(pasien.tanggalLahir, 'EEE, d MMMM yyyy HH:mm')}"></p>
+                    <p th:text="': ' + ${pasien.tempatLahir}"></p>
+                    <p th:text="': ' + ${pasien.pekerjaan}"></p>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center mb-2">
+                        <a class="btn text-white" style="background-color: #091C32;" th:href="@{/pasien/ubah/} + ${pasien.idPasien}">Ubah</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card" style="margin-top: 30px;">
+        <div class="card-header text-white text-center" style="background-color: #2C4B75;">
+            <h5>Daftar Vaksinasi</h5>
+        </div>
+        <div class="card-body">
+<!--            <div th:if="${listPasien.size() != 0}">-->
+<!--                <table class="table text-center">-->
+<!--                    <thead style="color: #2C4B75;">-->
+<!--                    <tr>-->
+<!--                        <th>No</th>-->
+<!--                        <th>Nama</th>-->
+<!--                        <th>NIK</th>-->
+<!--                        <th>Nomor Telepon</th>-->
+<!--                        <th>Jenis Kelamin</th>-->
+<!--                        <th>Tempat Lahir</th>-->
+<!--                        <th>Pekerjaan</th>-->
+<!--                        <th></th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                    <tr th:each="pasien, iterationStatus : ${listPasien}" style="color: grey">-->
+<!--                        &lt;!&ndash;                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"&ndash;&gt;-->
+<!--                        <td th:text="${iterationStatus.count}"></td>-->
+<!--                        <td th:text="${pasien.namaPasien}" style="color: #2C4B75"></td>-->
+<!--                        <td th:text="${pasien.nik}"></td>-->
+<!--                        <td th:text="${pasien.noTelepon}"></td>-->
+<!--                        <td th:if="${pasien.jenisKelamin == 0}">Perempuan</td>-->
+<!--                        <td th:if="${pasien.jenisKelamin == 1}">Laki-laki</td>-->
+<!--                        <td th:text="${pasien.tempatLahir}"></td>-->
+<!--                        <td th:text="${pasien.pekerjaan}"></td>-->
+<!--                        <td>-->
+<!--                            <a class="btn text-white" style="background-color: #2C4B75;" th:href="@{/}">Lihat</a>-->
+<!--                            <a class="btn text-white" style="background-color: #091C32;" th:href="@{/">Ubah</a>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                </table>-->
+<!--            </div>-->
+<!--            <div th:unless="${listPasien.size() != 0}" class="text-center">-->
+<!--                <h5 style="color: #2C4B75">Tidak ada pasien yang terdaftar</h5>-->
+<!--            </div>-->
+        </div>
+    </div>
+    <div style="margin-bottom: 20px; margin-top: 20px">
+        <a class="btn btn-outline-dark float-right" href="/pasien">Kembali</a>
+    </div>
+</div>
+<div th:include="fragments/fragment :: footer" style="margin-top: 50px;"></div>
+</body>
+</html>
