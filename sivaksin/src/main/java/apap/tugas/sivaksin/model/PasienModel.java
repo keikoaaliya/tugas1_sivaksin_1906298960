@@ -70,4 +70,7 @@ public class PasienModel implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_faskes")
     )
     List<FaskesModel> listFaskes;
+
+    @OneToMany(mappedBy = "pasien", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<DokterPasienModel> listPasienDokter;
 }

@@ -25,7 +25,7 @@ public class PasienServiceImpl implements PasienService{
     @Override
     public void addPasien(PasienModel pasienModel) {
         pasienDb.save(pasienModel);
-        System.out.println("Tanggal Lahir:" + pasienModel.getTanggalLahir());
+//        System.out.println("Tanggal Lahir:" + pasienModel.getTanggalLahir());
     }
 
     @Override

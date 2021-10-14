@@ -1,7 +1,11 @@
 package apap.tugas.sivaksin.controller;
 
+import apap.tugas.sivaksin.model.DokterPasienModel;
 import apap.tugas.sivaksin.model.FaskesModel;
 import apap.tugas.sivaksin.model.PasienModel;
+import apap.tugas.sivaksin.model.VaksinModel;
+import apap.tugas.sivaksin.service.DokterPasienService;
+import apap.tugas.sivaksin.service.FaskesService;
 import apap.tugas.sivaksin.service.PasienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +23,12 @@ public class PasienController {
     @Qualifier("pasienServiceImpl")
     @Autowired
     private PasienService pasienService;
+
+    @Autowired
+    private DokterPasienService dokterPasienService;
+
+    @Autowired
+    private FaskesService faskesService;
 
     @GetMapping("/pasien")
     public String viewAllPasien(Model model) {
@@ -51,12 +61,20 @@ public class PasienController {
     @GetMapping("/pasien/{idPasien}")
     public String viewPasien(
             @PathVariable Long idPasien,
+            @ModelAttribute DokterPasienModel dokterPasienModel,
             Model model
     ){
         PasienModel pasien = pasienService.getPasienByIdPasien(idPasien);
+        for(FaskesModel i: pasien.getListFaskes()) {
+            System.out.println("===========================");
+            System.out.println("nama faskes: " + i.getNamaFaskes());
+        }
 
         if(pasien!=null) {
             model.addAttribute("pasien", pasien);
+            model.addAttribute("listPasienDokter", pasien.getListPasienDokter());
+            model.addAttribute("listFaskes", pasien.getListFaskes());
+
         }
         return "view-pasien";
     }

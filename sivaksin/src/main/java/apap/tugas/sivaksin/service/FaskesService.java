@@ -10,4 +10,6 @@ public interface FaskesService {
     FaskesModel getFaskesByIdFaskes(Long idFaskes);
     FaskesModel updateFaskes(FaskesModel faskesModel);
     FaskesModel deleteFaskes(FaskesModel faskesModel);
+    List<FaskesModel> getListFaskesByJenisVaksin(String jenisVaksin);
+//    List<Long> test(String test);
 }

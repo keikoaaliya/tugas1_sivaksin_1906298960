@@ -70,7 +70,7 @@
                     <tr th:each="pasien, iterationStatus : ${listPasien}" style="color: grey">
                         <!--                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"-->
                         <td th:text="${iterationStatus.count}"></td>
-                        <td th:text="${pasien.namaPasien}" style="color: #2C4B75"></td>
+                        <td th:text="${pasien.namaPasien}" style="color: #2C4B75; font-weight: 500;"></td>
                         <td th:text="${pasien.nik}"></td>
                         <td th:text="${pasien.noTelepon}"></td>
                         <td th:if="${pasien.jenisKelamin == 0}">Perempuan</td>
@@ -78,8 +78,8 @@
                         <td th:text="${pasien.tempatLahir}"></td>
                         <td th:text="${pasien.pekerjaan}"></td>
                         <td>
-                            <a class="btn text-white" style="background-color: #2C4B75;" th:href="@{/}">Lihat</a>
-                            <a class="btn text-white" style="background-color: #091C32;" th:href="@{/">Ubah</a>
+                            <a class="btn text-white" style="background-color: #2C4B75;" th:href="@{/pasien/} + ${pasien.idPasien}">Lihat</a>
+                            <a class="btn text-white" style="background-color: #091C32;" th:href="@{/pasien/ubah/} + ${pasien.idPasien}">Ubah</a>
                         </td>
                     </tr>
                     </tbody>

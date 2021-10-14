@@ -15,27 +15,34 @@
         </div>
         <div class="card-body">
             <div class="justify-content-center">
-                <form th:action="@{/faskes/} + ${faskes.idFaskes} + @{tambah/pasien}" th:object="${faskes}" method="POST">
+                <form th:action="@{/faskes/} + ${faskes.idFaskes} + @{/tambah/pasien}" th:object="${dokterPasien}" method="POST">
                     Pasien<br>
-                    <select class="form-control" th:field="*{listPasien}">
+                    <select class="form-control" th:field="*{pasien}">
                         <option th:each="pas : ${listPasien2}"
                                 th:value="${pas.idPasien}"
                                 th:text="${pas.namaPasien}"
-                                th:selected="${pas.idPasien}"
+                                th:selected="${pas.idPasien == dokterPasien.pasien}"
                         ></option>
                     </select>
+                    <br>
+
                     Dokter<br>
-                    <select class="form-control" th:field="*{listPasien}">
-                        <option th:each="pas : ${listPasien2}"
-                                th:value="${pas.idPasien}"
-                                th:text="${pas.namaPasien}"
-                                th:selected="${pas.idPasien}"
+                    <select class="form-control" th:field="*{dokter}">
+                        <option th:each="dok : ${listDokter2}"
+                                th:value="${dok.idDokter}"
+                                th:text="${dok.namaDokter}"
+                                th:selected="${dok.idDokter == dokterPasien.dokter}"
                         ></option>
                     </select>
+                    <br>
+
+                    Waktu Suntik <br>
+                    <input required th:field="*{waktuSuntik}" class="form-control" type="datetime-local" name="waktuSuntik" />
+                    <br>
 
                     <div style="margin-top: 10px;">
                         <button class="btn text-white float-right" style="background-color: #091C32;" type="submit">Tambah</button>
-                        <a class="btn btn-outline-dark float-right" style="margin-right: 10px" href="/faskes">Batal</a>
+                        <a class="btn btn-outline-dark float-right" style="margin-right: 10px" th:href="@{/faskes/} + ${faskes.idFaskes}">Batal</a>
                     </div>
                 </form>
             </div>

@@ -1,11 +1,7 @@
 package apap.tugas.sivaksin.controller;
 
-import apap.tugas.sivaksin.model.FaskesModel;
-import apap.tugas.sivaksin.model.PasienModel;
-import apap.tugas.sivaksin.model.VaksinModel;
-import apap.tugas.sivaksin.service.FaskesService;
-import apap.tugas.sivaksin.service.PasienService;
-import apap.tugas.sivaksin.service.VaksinService;
+import apap.tugas.sivaksin.model.*;
+import apap.tugas.sivaksin.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -13,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.model.IModel;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +25,12 @@ public class FaskesController {
 
     @Autowired
     private PasienService pasienService;
+
+    @Autowired
+    private DokterService dokterService;
+
+    @Autowired
+    private DokterPasienService dokterPasienService;
 
     @GetMapping("/faskes")
     public String viewAllFaskes(Model model) {
@@ -114,30 +117,18 @@ public class FaskesController {
         return "delete-faskes";
     }
 
-    @GetMapping("/faskes/{idFaskes}/tambah/pasien")
-    public String addPasienForm(
-            @PathVariable Long idFaskes,
-            Model model
-    ){
-        FaskesModel faskes = faskesService.getFaskesByIdFaskes(idFaskes);
-        model.addAttribute("faskes", faskes);
-        model.addAttribute("listPasien2", pasienService.getListAllPasien());
-        return "tambah-faspas";
-    }
-
-    @PostMapping("/faskes/{idFaskes}/tambah/pasien")
-    public String addPasienSubmit(
-            @ModelAttribute FaskesModel faskes,
-            Model model
-    ) {
-        return "tambah-faspas-submit";
-    }
-
-    @GetMapping("cari/faskes")
+    @GetMapping("/cari/faskes")
     private String cariFaskes(
-//            @RequestMapping(value = "jenisVaksin") String jenisVaksin,
+            @ModelAttribute VaksinModel vaksinModel,
             Model model
     ) {
-        return  null;
+        List<VaksinModel> listVaksin = vaksinService.getListVaksin();
+        VaksinModel vaksin = new VaksinModel();
+//        List<FaskesModel> listFaskes = vaksinModel.getListFaskes();
+        model.addAttribute("vaksin", vaksin);
+        model.addAttribute("listVaksin", listVaksin);
+//        model.addAttribute("listFaskes", listFaskes);
+        return "cari-faskes-dari-vaksin";
     }
+
 }
