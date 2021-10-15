@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div style="padding: 30px;">
+    <div style="margin-bottom: 30px;">
+        <form th:action="@{/cari/pasien}">
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label class="text-secondary">Pilih Jenis Vaksin</label>
+                    <select class="form-control" style="margin-right: 15px" name="jenisVaksin" id="jenisVaksin" th:value="${jenisVaksin}">
+                        <option th:value="''" selected disabled>--Pilih Jenis Vaksin--</option>
+                        <option th:each="vaks : ${listVaksin}"
+                                th:value="${vaks.jenisVaksin}"
+                                th:text="${vaks.jenisVaksin}"
+                                th:selected="${vaks.jenisVaksin == vaksin.jenisVaksin}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    <label class="text-secondary">Pilih Faskes</label>
+                    <select class="form-control" style="margin-right: 15px" name="namaFaskes" id="namaFaskes" th:value="${namaFaskes}">
+                        <option th:value="''" selected disabled>--Pilih Faskes--</option>
+                        <option th:each="fas : ${listFaskes}"
+                                th:value="${fas.namaFaskes}"
+                                th:text="${fas.namaFaskes}"
+                                th:selected="${fas.namaFaskes == faskes.namaFaskes}"
+                        ></option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button class="btn text-white" style="background-color: #091C32; margin-left: 15 px; margin-top: 30px" type="submit">Cari</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card">
+        <div class="card-header text-white text-center" style="background-color: #2C4B75;">
+            <h5>Daftar Pasien Berdasarkan Jenis Vaksin dan Faskes</h5>
+        </div>
+        <div class="card-body">
+            <!--            <div th:if="*{listFaskes.size() != 0}">-->
+            <table class="table text-center">
+                <thead style="color: #2C4B75;">
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>NIK</th>
+                    <th>Nomor Telepon</th>
+                    <th>Jenis Kelamin</th>
+                    <th>Batch ID</th>
+                    <th>Waktu Suntik</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pasien, iterationStatus : ${listDokterPasien}" style="color: grey">
+                    <!--                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"-->
+                    <td th:text="${iterationStatus.count}"></td>
+                    <td th:text="${pasien.getPasien().getNamaPasien()}"></td>
+                    <td th:text="${pasien.getPasien().getNik()}"></td>
+                    <td th:text="${pasien.getPasien().getNoTelepon}"></td>
+                    <td th:if="${pasien.getPasien().getJenisKelamin == 0}">Perempuan</td>
+                    <td th:if="${pasien.getPasien().getJenisKelamin == 1}">Laki-laki</td>
+                    <td th:text="${pasien.batchId}"></td>
+                    <td th:text="${#temporals.format(pasien.getWaktuSuntik, 'dd MMMM yyyy HH:mm')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+<div th:include="fragments/fragment :: footer" style="margin-top: 15px;"></div>
+</body>
+</html>

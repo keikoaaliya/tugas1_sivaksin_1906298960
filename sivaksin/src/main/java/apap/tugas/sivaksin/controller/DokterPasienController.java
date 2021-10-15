@@ -40,16 +40,11 @@ public class DokterPasienController {
             Model model
     ){
         FaskesModel faskes = faskesService.getFaskesByIdFaskes(idFaskes);
-//        if(faskes.getListPasien() == null) {
-//            faskes.setListPasien(new ArrayList<PasienModel>());
-//        }
-//        faskes.getListPasien().add(new PasienModel());
 
         model.addAttribute("faskes", faskes);
         model.addAttribute("listPasien2", pasienService.getListAllPasien());
         model.addAttribute("listDokter2", dokterService.getListDokter());
         model.addAttribute("dokterPasien", new DokterPasienModel());
-//        model.addAttribute("listPasien3", pasienService.getListAllPasien());
         return "tambah-faspas";
     }
 
@@ -59,8 +54,6 @@ public class DokterPasienController {
             @ModelAttribute DokterPasienModel dokterPasienModel,
             Model model
     ) {
-
-//        FaskesModel faskes = faskesService.getFaskesByIdFaskes(idFaskes);
 
         if(dokterPasienService.addDokterPasien(dokterPasienModel, idFaskes)) {
             model.addAttribute("dokterPasien", dokterPasienModel);

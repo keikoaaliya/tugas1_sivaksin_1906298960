@@ -3,9 +3,11 @@ package apap.tugas.sivaksin.service;
 import apap.tugas.sivaksin.model.DokterPasienModel;
 import apap.tugas.sivaksin.model.FaskesModel;
 import apap.tugas.sivaksin.model.PasienModel;
+import apap.tugas.sivaksin.model.VaksinModel;
 import apap.tugas.sivaksin.repository.DokterPasienDb;
 import apap.tugas.sivaksin.repository.FaskesDb;
 import apap.tugas.sivaksin.repository.PasienDb;
+import apap.tugas.sivaksin.repository.VaksinDb;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +36,9 @@ public class DokterPasienServiceImpl implements DokterPasienService{
     @Autowired
     PasienDb pasienDb;
 
+    @Autowired
+    VaksinDb vaksinDb;
+
     @Override
     public Boolean addDokterPasien(DokterPasienModel dokterPasienModel, Long idFaskes) {
         dokterPasienModel.setBatchId(generateBatchId(dokterPasienModel));
@@ -43,46 +48,24 @@ public class DokterPasienServiceImpl implements DokterPasienService{
 
         FaskesModel faskesModel = faskesDb.getById(dokterPasienModel.getIdFaskes());
 
-        if(faskesModel.getListPasien() == null) {
-            faskesModel.setListPasien(new ArrayList<PasienModel>());
-        }
-        faskesModel.getListPasien().add(dokterPasienModel.getPasien());
-        faskesDb.save(faskesModel);
-
-//        if (faskesModel.getIdFaskes() == idFaskes) {
-//            FaskesModel faskes = new FaskesModel();
-//            List<PasienModel> listPasien = new ArrayList<>();
-//            listPasien.add(dokterPasienModel.getPasien());
-//
-//            faskes.setListPasien(listPasien);
-
-//            faskes.setListPasien(new ArrayList<PasienModel>(dokterPasienModel.getPasien()));
-//
-//            pasien.getListFaskes().add(faskesModel);
-
-//        }
-
-        PasienModel pasienModel = pasienDb.getById(dokterPasienModel.getPasien().getIdPasien());
-        if(pasienModel.getListFaskes() == null) {
-            pasienModel.setListFaskes(new ArrayList<FaskesModel>());
-        }
-        pasienModel.getListFaskes().add(faskesModel);
-        pasienDb.save(pasienModel);
-
-//        List<FaskesModel> listFaskes = new ArrayList<>();
-//        listFaskes.add(faskesModel);
-//
-//        PasienModel pasien = new PasienModel();
-//        pasien.setListFaskes(listFaskes);
-
-
-
         LocalTime jamMulai = faskesModel.getJamMulai();
         LocalTime jamTutup = faskesModel.getJamTutup();
 
         Boolean isValid;
         if(jamSuntik.isBefore(jamTutup) && jamSuntik.isAfter(jamMulai)) {
+            if(faskesModel.getListPasien() == null) {
+                faskesModel.setListPasien(new ArrayList<PasienModel>());
+            }
+            faskesModel.getListPasien().add(dokterPasienModel.getPasien());
+
+            PasienModel pasienModel = pasienDb.getById(dokterPasienModel.getPasien().getIdPasien());
+            if(pasienModel.getListFaskes() == null) {
+                pasienModel.setListFaskes(new ArrayList<FaskesModel>());
+            }
+            pasienModel.getListFaskes().add(faskesModel);
             dokterPasienDb.save(dokterPasienModel);
+            faskesDb.save(faskesModel);
+            pasienDb.save(pasienModel);
             isValid = true;
         } else {
             isValid = false;
@@ -134,21 +117,23 @@ public class DokterPasienServiceImpl implements DokterPasienService{
     }
 
     @Override
-    public DokterPasienModel getDokterPasienByIdFaskes(Long idFaskes) {
-        Optional<DokterPasienModel> dokterPasien = dokterPasienDb.findAllByIdFaskes(idFaskes);
-        if(dokterPasien.isPresent()) return dokterPasien.get();
-        else return null;
+    public List<DokterPasienModel> getListPasienByNamaFaskes(String namaFaskes) {
+        FaskesModel faskes = faskesDb.findByNamaFaskes(namaFaskes);
+        return dokterPasienDb.findAllPasienByIdFaskes(faskes.getIdFaskes());
     }
 
-//    @Override
-//    public DokterPasienModel getPasienByIdFaskesInDokterPasien(DokterPasienModel dokterPasienModel) {
-//        Optional<DokterPasienModel> pasien = dokterPasienDb.findByIdFaskes(dokterPasienModel.getIdFaskes());
-//        if(pasien.isPresent()) {
-//            return pasien.get();
-//        } else {
-//            return null;
-//        }
-//    }
+    @Override
+    public List<DokterPasienModel> getListPasienByJenisVaksin(String jenisVaksin) {
+        VaksinModel vaksin = vaksinDb.findByJenisVaksin(jenisVaksin);
+        return dokterPasienDb.findAllIdDokterPasienByIdVaksin(vaksin.getIdVaksin());
+    }
+
+    @Override
+    public List<DokterPasienModel> getListPasienByJenisVaksinAndNamaFaskes(String jenisVaksin, String namaFaskes) {
+        Long idFaskes = faskesDb.findByNamaFaskes(namaFaskes).getIdFaskes();
+        Long idVaksin = vaksinDb.findByJenisVaksin(jenisVaksin).getIdVaksin();
+        return dokterPasienDb.findAllIdDokterPasienByIdVaksinAndIdFaskes(idVaksin, idFaskes);
+    }
 
 
 }

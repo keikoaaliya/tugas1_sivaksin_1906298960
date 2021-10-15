@@ -11,6 +11,10 @@ import java.util.Optional;
 @Repository
 public interface FaskesDb extends JpaRepository<FaskesModel, Long> {
     Optional<FaskesModel> findByIdFaskes(Long idFaskes);
-//    @Query(value = "select dp.id_faskes from dokter_pasien dp where dp.pasien_id in (select p.id_pasien from pasien p where p.nama_pasien = :pasien);", nativeQuery = true)
-//    List<Long> findIdFaskesByPasien(String pasien);
+    FaskesModel findByNamaFaskes(String namaFaskes);
+
+    @Query(value = "Select * from faskes where vaksin_id = :idVaksin",nativeQuery = true)
+    List<FaskesModel> findAllFaskesByIdVaksin(Long idVaksin);
+
+
 }

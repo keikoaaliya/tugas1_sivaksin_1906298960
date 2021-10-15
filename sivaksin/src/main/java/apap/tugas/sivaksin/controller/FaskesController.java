@@ -4,11 +4,13 @@ import apap.tugas.sivaksin.model.*;
 import apap.tugas.sivaksin.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.model.IModel;
 
+import javax.validation.Valid;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -119,16 +121,19 @@ public class FaskesController {
 
     @GetMapping("/cari/faskes")
     private String cariFaskes(
-            @ModelAttribute VaksinModel vaksinModel,
+            @Param("jenisVaksin") String jenisVaksin,
             Model model
     ) {
         List<VaksinModel> listVaksin = vaksinService.getListVaksin();
         VaksinModel vaksin = new VaksinModel();
-//        List<FaskesModel> listFaskes = vaksinModel.getListFaskes();
+        if(jenisVaksin != null){
+            List<FaskesModel> listFaskes = faskesService.getListFaskesByJenisVaksin(jenisVaksin);
+            model.addAttribute("listFaskes", listFaskes);
+        }
         model.addAttribute("vaksin", vaksin);
         model.addAttribute("listVaksin", listVaksin);
-//        model.addAttribute("listFaskes", listFaskes);
-        return "cari-faskes-dari-vaksin";
+        model.addAttribute("jenisVaksin",jenisVaksin);
+        return "cari-faskes";
     }
 
 }

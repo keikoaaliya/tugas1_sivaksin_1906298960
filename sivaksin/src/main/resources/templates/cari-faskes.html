@@ -10,15 +10,15 @@
 <nav th:replace="fragments/fragment :: navbar"></nav>
 <div style="padding: 30px;">
     <div style="margin-bottom: 30px;">
-        <form th:action="@{/cari/faskes(jenisVaksin=${vaksin.jenisVaksin})}" th:object="${vaksin}" method="POST"
+        <div>
+            <p class="text-secondary">Pilih Jenis Vaksin</p>
+        </div>
+        <form th:action="@{/cari/faskes}"
         class="form-inline">
-            <!--        th:href="@{/agensi/view(noAgensi=${agensi.noAgensi})}"-->
-
-            Pilih Jenis Vaksin<br>
-            <select class="form-control col-md-4" style="margin-right: 15px">
+            <select class="form-control col-md-4" style="margin-right: 15px" name="jenisVaksin" id="jenisVaksin" th:value="${jenisVaksin}">
                 <option th:value="''" selected disabled>--Pilih Jenis Vaksin--</option>
                 <option th:each="vaks : ${listVaksin}"
-                        th:value="${vaks.idVaksin}"
+                        th:value="${vaks.jenisVaksin}"
                         th:text="${vaks.jenisVaksin}"
                         th:selected="${vaks.jenisVaksin == vaksin.jenisVaksin}"
                 ></option>
@@ -45,16 +45,16 @@
                     </tr>
                     </thead>
                     <tbody>
-<!--                    <tr th:each="faskes, iterationStatus : ${listFaskes}" style="color: grey">-->
-<!--                        &lt;!&ndash;                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"&ndash;&gt;-->
-<!--                        <td th:text="${iterationStatus.count}"></td>-->
-<!--                        <td th:text="${faskes.namaFaskes}"></td>-->
-<!--                        <td th:text="${faskes.kuota}"></td>-->
-<!--                        <td th:text="${faskes.provinsi}"></td>-->
-<!--                        <td th:text="${faskes.kabupaten}"></td>-->
-<!--                        <td th:text="${#temporals.format(faskes.jamMulai, 'hh:mm a')}"></td>-->
-<!--                        <td th:text="${#temporals.format(faskes.jamTutup, 'hh:mm a')}"></td>-->
-<!--                    </tr>-->
+                        <tr th:each="faskes, iterationStatus : ${listFaskes}" style="color: grey">
+                            <!--                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"-->
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td th:text="${faskes.namaFaskes}"></td>
+                            <td th:text="${faskes.kuota}"></td>
+                            <td th:text="${faskes.provinsi}"></td>
+                            <td th:text="${faskes.kabupaten}"></td>
+                            <td th:text="${#temporals.format(faskes.jamMulai, 'hh:mm a')}"></td>
+                            <td th:text="${#temporals.format(faskes.jamTutup, 'hh:mm a')}"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

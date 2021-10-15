@@ -48,43 +48,34 @@
         </div>
         <div class="card-body">
             <div th:if="${listFaskes.size() != 0}">
-                <table class="table text-center">
-                    <thead style="color: #2C4B75;">
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Faskes</th>
-                        <th>Vaksin</th>
-                        <th>Batch ID</th>
-                        <th>Waktu Suntik</th>
-                        <th>Nama Dokter</th>
-                        <th>NIP Dokter</th>
-                        <th>No Telepon Dokter</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="faskes, iterationStatus : ${listFaskes}" style="color: grey">
-                        <td th:text="${iterationStatus.count}"></td>
-                        <td th:text="${faskes.namaFaskes}"></td>
-                        <td th:text="${faskes.getVaksin().getJenisVaksin()}"></td>
-                        <td th:text="${listPasienDokter[iterationStatus.count-1].batchId}"></td>
-                        <td th:text="${#temporals.format(listPasienDokter[iterationStatus.count-1].waktuSuntik, 'EEE, d MMMM yyyy HH:mm')}"></td>
-                        <td th:text="${listPasienDokter[iterationStatus.count-1].getDokter().getNamaDokter()}"></td>
-                        <td th:text="${listPasienDokter[iterationStatus.count-1].getDokter().getNip()}"></td>
-                        <td th:text="${listPasienDokter[iterationStatus.count-1].getDokter().getNomorTelepon()}"></td>
-                    </tr>
-<!--                    <tr th:each="pasien, iterationStatus : ${listPasienDokter}">-->
-<!--                        &lt;!&ndash;                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"&ndash;&gt;-->
-<!--                        <td th:text="${iterationStatus.count}"></td>-->
-<!--                        <td th:text="${listFaskes[listFaskes.size()].namaFaskes}"></td>-->
-<!--                        <td th:text="${listFaskes[iterationStatus.index].getVaksin().getJenisVaksin()}"></td>-->
-<!--                        <td th:text="${pasien.batchId}" style="color: #2C4B75; font-weight: 500;"></td>-->
-<!--                        <td th:text="${#temporals.format(pasien.waktuSuntik, 'EEE, d MMMM yyyy HH:mm')}"></td>-->
-<!--                        <td th:text="${pasien.getDokter().getNamaDokter()}"></td>-->
-<!--                        <td th:text="${pasien.getDokter().getNip()}"></td>-->
-<!--                        <td th:text="${pasien.getDokter().getNomorTelepon()}"></td>-->
-<!--                    </tr>-->
-                    </tbody>
-                </table>
+<!--                <div th:if="${listPasienDokter != null}">-->
+                    <table class="table text-center">
+                        <thead style="color: #2C4B75;">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Faskes</th>
+                            <th>Vaksin</th>
+                            <th>Batch ID</th>
+                            <th>Waktu Suntik</th>
+                            <th>Nama Dokter</th>
+                            <th>NIP Dokter</th>
+                            <th>No Telepon Dokter</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="faskes, iterationStatus : ${listFaskes}" style="color: grey">
+                            <td th:text="${iterationStatus.count}"></td>
+                            <td th:text="${faskes.namaFaskes}"></td>
+                            <td th:text="${faskes.getVaksin().getJenisVaksin()}"></td>
+                            <td th:text="${listPasienDokter[iterationStatus.count-1].batchId}"></td>
+                            <td th:text="${#temporals.format(listPasienDokter[iterationStatus.count-1].waktuSuntik, 'EEE, d MMMM yyyy HH:mm')}"></td>
+                            <td th:text="${listPasienDokter[iterationStatus.count-1].getDokter().getNamaDokter()}"></td>
+                            <td th:text="${listPasienDokter[iterationStatus.count-1].getDokter().getNip()}"></td>
+                            <td th:text="${listPasienDokter[iterationStatus.count-1].getDokter().getNomorTelepon()}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+<!--                </div>-->
             </div>
             <div th:unless="${listFaskes.size() != 0}" class="text-center">
                 <h5 style="color: #2C4B75">Tidak ada faskes yang terdaftar</h5>

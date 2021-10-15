@@ -1,7 +1,9 @@
 package apap.tugas.sivaksin.service;
 
 import apap.tugas.sivaksin.model.FaskesModel;
+import apap.tugas.sivaksin.model.VaksinModel;
 import apap.tugas.sivaksin.repository.FaskesDb;
+import apap.tugas.sivaksin.repository.VaksinDb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,9 @@ import java.util.Optional;
 public class FaskesServiceImpl implements FaskesService{
     @Autowired
     FaskesDb faskesDb;
+
+    @Autowired
+    VaksinDb vaksinDb;
 
     @Override
     public List<FaskesModel> getListFaskes() {
@@ -60,7 +65,8 @@ public class FaskesServiceImpl implements FaskesService{
 
     @Override
     public List<FaskesModel> getListFaskesByJenisVaksin(String jenisVaksin) {
-        return faskesDb.findAll(Sort.by(Sort.Direction.ASC, "vaksin"));
+        VaksinModel vaksin = vaksinDb.findByJenisVaksin(jenisVaksin);
+        return faskesDb.findAllFaskesByIdVaksin(vaksin.getIdVaksin());
     }
 
 
@@ -86,9 +92,4 @@ public class FaskesServiceImpl implements FaskesService{
         }
         return flag;
     }
-
-//    @Override
-//    public List<Long> test(String pasien) {
-//        return faskesDb.findIdFaskesByPasien(pasien);
-//    }
 }
