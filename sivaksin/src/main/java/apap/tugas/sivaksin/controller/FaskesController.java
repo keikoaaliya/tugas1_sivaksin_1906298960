@@ -13,6 +13,7 @@ import org.thymeleaf.model.IModel;
 import javax.validation.Valid;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -135,5 +136,4 @@ public class FaskesController {
         model.addAttribute("jenisVaksin",jenisVaksin);
         return "cari-faskes";
     }
-
 }

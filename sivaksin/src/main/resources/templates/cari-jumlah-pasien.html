@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Jumlah Pasien</title>
+    <object th:include="fragments/fragment :: css" th:remove="tag"></object>
+    <object th:include="fragments/fragment :: js" th:remove="tag"></object>
+</head>
+<body>
+<nav th:replace="fragments/fragment :: navbar"></nav>
+<div style="padding: 30px;">
+    <div class="card">
+        <div class="card-header text-white text-center" style="background-color: #2C4B75;">
+            <h5>Daftar Jumlah Pasien Bulan Ini</h5>
+        </div>
+        <div class="card-body">
+            <div th:if="${listByMonth.size() != 0}">
+                <table class="table text-center">
+                    <thead style="color: #2C4B75;">
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Faskes</th>
+                        <th>Jumlah Pasien</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item, iterationStatus : ${listByMonth}" style="color: grey">
+                        <!--                            th:style="${iterationStatus.even} ? 'font-weight:bold;'"-->
+                        <td th:text="${iterationStatus.count}"></td>
+                        <td th:text="${item[0]}"></td>
+                        <td th:text="${item[1]}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="fragments/fragment :: footer" style="margin-top: 15px;"></div>
+</body>
+</html>

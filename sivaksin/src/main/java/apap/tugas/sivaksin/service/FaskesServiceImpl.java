@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,6 +70,17 @@ public class FaskesServiceImpl implements FaskesService{
         return faskesDb.findAllFaskesByIdVaksin(vaksin.getIdVaksin());
     }
 
+//    public List<FaskesModel> getListFaskesByMonth() {
+//        return faskesDb.findByLastMonth();
+//    }
+//
+//    public List<Integer> listCountPasienByMonth() {
+//        return faskesDb.findByLastMonthCount();
+//    }
+
+    public List<Object> listByMonth() {
+        return faskesDb.findByMonth();
+    }
 
     public boolean validation(Long idFaskes) {
         FaskesModel target = getFaskesByIdFaskes(idFaskes);

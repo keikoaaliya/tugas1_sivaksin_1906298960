@@ -4,19 +4,13 @@ import apap.tugas.sivaksin.model.DokterPasienModel;
 import apap.tugas.sivaksin.model.FaskesModel;
 import apap.tugas.sivaksin.model.PasienModel;
 import apap.tugas.sivaksin.model.VaksinModel;
-import apap.tugas.sivaksin.service.DokterPasienService;
-import apap.tugas.sivaksin.service.FaskesService;
-import apap.tugas.sivaksin.service.PasienService;
-import apap.tugas.sivaksin.service.VaksinService;
+import apap.tugas.sivaksin.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +29,9 @@ public class PasienController {
 
     @Autowired
     private VaksinService vaksinService;
+
+    @Autowired
+    private FaskesServiceImpl faskesImpl;
 
     @GetMapping("/pasien")
     public String viewAllPasien(Model model) {
@@ -76,12 +73,6 @@ public class PasienController {
             model.addAttribute("pasien", pasien);
             model.addAttribute("listPasienDokter", pasien.getListPasienDokter());
             model.addAttribute("listFaskes", pasien.getListFaskes());
-//            System.out.println("============debugging===============");
-//            for (DokterPasienModel i : pasien.getListPasienDokter()
-//                 ) {
-//                System.out.println("nama pasien " + i.getPasien().getNamaPasien());
-//                System.out.println("batch id: " + i.getBatchId());
-//            }
 
         }
         return "view-pasien";
@@ -122,7 +113,6 @@ public class PasienController {
         List<FaskesModel> listFaskes = faskesService.getListFaskes();
         VaksinModel vaksin = new VaksinModel();
         FaskesModel faskes = new FaskesModel();
-
         if(jenisVaksin != null && namaFaskes != null) {
             List<DokterPasienModel> listDokterPasien = dokterPasienService.getListPasienByJenisVaksinAndNamaFaskes(jenisVaksin, namaFaskes);
             model.addAttribute("listDokterPasien", listDokterPasien);
@@ -142,5 +132,20 @@ public class PasienController {
         model.addAttribute("vaksin", vaksin);
         model.addAttribute("faskes", faskes);
         return "cari-pasien";
+    }
+
+    @GetMapping("cari/jumlah-pasien/bulan-ini")
+    public String cariJumlahPasien(
+            Model model
+    ){
+        List<Object> listByMonth = faskesImpl.listByMonth();
+        model.addAttribute("listByMonth", faskesImpl.listByMonth());
+        return "cari-jumlah-pasien";
+    }
+
+    @GetMapping("/test")
+    public @ResponseBody
+    List<Object> getListByMonth(){
+        return faskesImpl.listByMonth();
     }
 }

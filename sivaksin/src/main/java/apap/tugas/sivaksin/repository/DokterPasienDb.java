@@ -30,5 +30,4 @@ public interface DokterPasienDb extends JpaRepository<DokterPasienModel, Long> {
             "join vaksin v on v.id_vaksin = f.vaksin_id \n" +
             "where v.id_vaksin = :idVaksin and f.id_faskes = :idFaskes",nativeQuery = true)
     List<DokterPasienModel> findAllIdDokterPasienByIdVaksinAndIdFaskes(Long idVaksin, Long idFaskes);
-
 }

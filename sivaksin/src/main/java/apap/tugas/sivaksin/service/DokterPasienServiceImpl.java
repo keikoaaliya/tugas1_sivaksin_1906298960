@@ -93,7 +93,14 @@ public class DokterPasienServiceImpl implements DokterPasienService{
         batchId.insert(2, duaHurufAwal);
 
         LocalDateTime dateTime = dokterPasienModel.getPasien().getTanggalLahir();
-        batchId.insert(4, dateTime.getDayOfMonth());
+
+        if(dateTime.getDayOfMonth() < 10) {
+            batchId.insert(4, '0');
+            batchId.insert(5, dateTime.getDayOfMonth());
+        } else {
+            batchId.insert(4, dateTime.getDayOfMonth());
+        }
+
         if(dateTime.getMonthValue() < 10) {
             batchId.insert(6, '0');
             batchId.insert(7, dateTime.getMonthValue());
@@ -134,6 +141,4 @@ public class DokterPasienServiceImpl implements DokterPasienService{
         Long idVaksin = vaksinDb.findByJenisVaksin(jenisVaksin).getIdVaksin();
         return dokterPasienDb.findAllIdDokterPasienByIdVaksinAndIdFaskes(idVaksin, idFaskes);
     }
-
-
 }
